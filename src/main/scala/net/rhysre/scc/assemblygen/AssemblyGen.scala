@@ -3,7 +3,7 @@ package net.rhysre.scc.assemblygen
 import net.rhysre.scc.parser.nodes._
 
 object AssemblyGen {
-  private def genFunction(name: String) = s".globl $name\n$name:\n"
+  private def genFunction(name: String): String = s".globl $name\n$name:\n"
 
   private def genProgram() = s".text\n"
 
@@ -14,7 +14,7 @@ object AssemblyGen {
 
   def generate(root: AstNode): String = root match {
     case ProgramNode(entryPoint) => genProgram() + generate(entryPoint)
-    case FunctionNode(name, start) => genFunction(name) + generate(start)
+    case FunctionNode(name, nodes) => genFunction(name) + (for(node<-nodes) yield generate(node)).mkString
     case ReturnNode(retVal) => genReturn(retVal)
   }
 }

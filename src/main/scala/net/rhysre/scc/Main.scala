@@ -9,5 +9,5 @@ import net.rhysre.scc.parser.Parser
 object Main extends App {
   val lexOutput = Lexer.lex(Source.fromFile("file.c").toStream)
 
-  println(AssemblyGen.generate(Parser.parse(lexOutput)))
+  println(AssemblyGen.generate(Parser.parseFunctions(lexOutput)))
 }
