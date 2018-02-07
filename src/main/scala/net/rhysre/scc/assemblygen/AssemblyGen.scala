@@ -8,7 +8,7 @@ object AssemblyGen {
   private def genProgram() = s".text\n"
 
   private def genReturn(retVal: AstNode) = retVal match {
-    case IntValueNode(value) => s"\tmovl\t$value, %eax"
+    case IntValueNode(value) => s"\tmovl\t$value, %eax\n"
     case _ => throw new UnsupportedOperationException("Return type not implemented")
   }
 
