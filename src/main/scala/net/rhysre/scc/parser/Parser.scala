@@ -30,15 +30,15 @@ object Parser {
   }
 
   private def parseFunction(tokens: List[Token]): (FunctionNode, List[Token]) = {
-    val (name, statements, tail) = tokens match {
-      case IdentifierToken(name) :: OpenParensToken() :: CloseParensToken() :: OpenBraceToken() :: nd => {
-        val (statements, tail): (List[AstNode], List[Token]) = parseStatementList(nd)
-        (name, statements, nd)
+    val (name, statements, rest) = tokens match {
+      case IdentifierToken(name) :: OpenParensToken() :: CloseParensToken() :: OpenBraceToken() :: tail => {
+        val (statements, _): (List[AstNode], List[Token]) = parseStatementList(tail)
+        (name, statements, tail)
       }
       case _ => throw new RuntimeException("Parse error in function header")
     }
 
-    (FunctionNode(name, statements), tail)
+    (FunctionNode(name, statements), rest)
   }
 
 
